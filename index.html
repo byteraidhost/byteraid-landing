@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ByteRaid — Modpack Hosting That Doesn't Choke</title>
+  <meta name="description" content="ByteRaid spins up dedicated Minecraft modpack servers in under 60 seconds. Tuned hardware, DDoS-protected, no babysitting." />
+  <meta name="theme-color" content="#0b0a14" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ByteRaid — Modpack Hosting That Doesn't Choke" />
+  <meta property="og:description" content="Dedicated Minecraft modpack hosting. Tuned for the hard packs." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a855f7'/%3E%3Cpath d='M9 9h7a4 4 0 0 1 0 8H9zm0 8h8a4 4 0 0 1 0 8H9z' fill='%230b0a14'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            ink: {
+              900: '#08070f',
+              800: '#0b0a14',
+              700: '#13111d',
+              600: '#1c1930',
+              500: '#2a2545',
+            },
+            brand: {
+              500: '#a855f7',
+              400: '#c084fc',
+              300: '#d8b4fe',
+            },
+            cyan: {
+              accent: '#22d3ee',
+            },
+          },
+          boxShadow: {
+            glow: '0 0 40px -10px rgba(168, 85, 247, 0.55)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(168,85,247,0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 20%, rgba(34,211,238,0.10), transparent 60%),
+        #08070f;
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(168,85,247,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,85,247,0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, #000 30%, transparent 75%);
+    }
+    .gradient-text {
+      background: linear-gradient(110deg, #ffffff 0%, #c084fc 45%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(28,25,48,0.6) 0%, rgba(11,10,20,0.6) 100%);
+      border: 1px solid rgba(168,85,247,0.18);
+      backdrop-filter: blur(6px);
+    }
+    .card:hover { border-color: rgba(168,85,247,0.45); }
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .chev { transform: rotate(180deg); }
+  </style>
+</head>
+
+<body class="text-slate-200 font-sans antialiased selection:bg-brand-500/40 selection:text-white">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-ink-900/70 border-b border-white/5">
+    <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 group">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-brand-500 text-ink-900 font-extrabold shadow-glow">BR</span>
+        <span class="font-extrabold tracking-tight text-white">ByteRaid</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <li><a class="hover:text-white" href="#features">Features</a></li>
+        <li><a class="hover:text-white" href="#pricing">Pricing</a></li>
+        <li><a class="hover:text-white" href="#faq">FAQ</a></li>
+        <li><a class="hover:text-white" href="#waitlist">Newsletter</a></li>
+      </ul>
+      <a href="https://discord.gg/ARqmzFt3RD"
+         class="inline-flex items-center gap-2 rounded-md bg-brand-500 hover:bg-brand-400 text-ink-900 font-semibold px-4 py-2 text-sm transition shadow-glow">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.27 14.27 0 0 0-.652 1.34 18.27 18.27 0 0 0-5.81 0A14.27 14.27 0 0 0 9.444 3a19.79 19.79 0 0 0-3.76 1.369C2.07 9.78 1.07 15.06 1.57 20.27A19.9 19.9 0 0 0 7.6 23.2c.49-.66.93-1.36 1.31-2.09a12.93 12.93 0 0 1-2.06-.99c.17-.13.34-.26.5-.4 3.97 1.84 8.26 1.84 12.18 0 .17.14.34.27.5.4-.66.39-1.35.72-2.06.99.38.73.82 1.43 1.31 2.09a19.9 19.9 0 0 0 6.03-2.93c.6-6-1-11.24-2.99-15.9ZM8.78 16.55c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.95 2.43-2.15 2.43Zm6.44 0c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.95 2.43-2.15 2.43Z"/></svg>
+        Join Discord
+      </a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 grid-bg pointer-events-none"></div>
+      <div class="relative max-w-7xl mx-auto px-6 pt-20 pb-28 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-300">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Launching Q1 2026 — Join early access
+        </div>
+        <h1 class="mt-6 text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">
+          <span class="gradient-text">Modpack hosting</span><br />
+          that doesn't choke.
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-lg text-slate-300">
+          ByteRaid spins up dedicated Minecraft modpack servers in under 60 seconds. NVMe storage, high-clock CPUs, DDoS filtering — tuned for the packs that crash everyone else.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://discord.gg/ARqmzFt3RD"
+             class="inline-flex justify-center items-center gap-2 rounded-md bg-brand-500 hover:bg-brand-400 text-ink-900 font-semibold px-6 py-3 transition shadow-glow">
+            Join the Discord
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 0 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd"/></svg>
+          </a>
+          <a href="#pricing"
+             class="inline-flex justify-center items-center gap-2 rounded-md border border-white/15 hover:border-white/30 text-white font-semibold px-6 py-3 transition">
+            See pricing
+          </a>
+        </div>
+
+        <!-- terminal mock -->
+        <div class="mt-16 mx-auto max-w-2xl text-left">
+          <div class="card rounded-xl overflow-hidden shadow-glow">
+            <div class="flex items-center gap-2 px-4 py-2 border-b border-white/5 bg-ink-700/60">
+              <span class="h-3 w-3 rounded-full bg-red-400/70"></span>
+              <span class="h-3 w-3 rounded-full bg-yellow-400/70"></span>
+              <span class="h-3 w-3 rounded-full bg-emerald-400/70"></span>
+              <span class="ml-2 text-xs text-slate-400 font-mono">byteraid ~ provision</span>
+            </div>
+            <pre class="p-5 text-xs md:text-sm font-mono leading-relaxed text-slate-300 overflow-x-auto"><span class="text-brand-400">$</span> byteraid spin --pack=create2 --ram=8g
+<span class="text-cyan-accent">→</span> Allocating node ............. <span class="text-emerald-400">ok</span>  (412ms)
+<span class="text-cyan-accent">→</span> Mounting NVMe volume ........ <span class="text-emerald-400">ok</span>  (180ms)
+<span class="text-cyan-accent">→</span> Installing Create: Above &amp; Beyond <span class="text-emerald-400">ok</span>  (38s)
+<span class="text-cyan-accent">→</span> Opening port + DNS .......... <span class="text-emerald-400">ok</span>
+<span class="text-emerald-400">✓</span> Server live at <span class="text-white">play.byteraid.net:25565</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="relative py-24 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl">
+          <p class="text-sm font-semibold uppercase tracking-widest text-brand-400">Why ByteRaid</p>
+          <h2 class="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-white">Built for the packs that break everything else.</h2>
+          <p class="mt-4 text-slate-300">Most Minecraft hosts spec for vanilla. We spec for 300+ mods, 12 dimensions, and chunkloaders running 24/7.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <!-- card -->
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m13 2-3 7h5l-3 13 8-12h-5l3-8z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Live in 60 seconds</h3>
+            <p class="mt-2 text-sm text-slate-400">One-click provisioning. Pick a pack, pick RAM, hit deploy. We handle the rest.</p>
+          </div>
+
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h10"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">200+ modpack library</h3>
+            <p class="mt-2 text-sm text-slate-400">All major CurseForge and Modrinth packs pre-tuned. Or upload your own zip.</p>
+          </div>
+
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Crash-proof hardware</h3>
+            <p class="mt-2 text-sm text-slate-400">Xeon-class hardware, 128GB DDR4 ECC, NVMe Gen4 in RAID 1. Tested against ATM9 and other heavy modpacks before customers touch it.</p>
+          </div>
+
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">DDoS protection</h3>
+            <p class="mt-2 text-sm text-slate-400">Always-on L4/L7 filtering. Your raid won't get raided.</p>
+          </div>
+
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v12H4zM2 20h20"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Pterodactyl panel</h3>
+            <p class="mt-2 text-sm text-slate-400">The control panel your admin already knows. SFTP, file editor, scheduled restarts, backups.</p>
+          </div>
+
+          <div class="card rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-500/15 text-brand-300 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 4v.01M12 8v4"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Real humans, fast</h3>
+            <p class="mt-2 text-sm text-slate-400">Support staff who actually play modded. AI-assisted triage means most issues get diagnosed in minutes, not hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="relative py-24 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-brand-400">Pricing</p>
+          <h2 class="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-white">Pay for RAM, not marketing.</h2>
+          <p class="mt-4 text-slate-300">Every plan includes unmetered slots, DDoS protection, daily backups, and full file access.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+          <!-- Sprout -->
+          <div class="card rounded-xl p-6 flex flex-col">
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-400">Sprout</h3>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-5xl font-extrabold text-white">$5</span>
+              <span class="text-slate-400">/ mo</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-400">Light packs, small friend groups.</p>
+            <ul class="mt-6 space-y-2 text-sm text-slate-300 flex-1">
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 4 GB RAM</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Unlimited slots</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 40 GB NVMe</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Daily backups</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> DDoS protection</li>
+            </ul>
+            <a href="https://discord.gg/ARqmzFt3RD" class="mt-6 inline-flex justify-center items-center rounded-md border border-white/15 hover:border-white/30 px-4 py-2.5 text-sm font-semibold text-white transition">Join Discord for early access</a>
+          </div>
+
+          <!-- Forge (popular) -->
+          <div class="card rounded-xl p-6 flex flex-col relative ring-2 ring-brand-500 shadow-glow">
+            <span class="absolute -top-3 right-6 rounded-full bg-brand-500 text-ink-900 text-xs font-bold uppercase tracking-wider px-3 py-1">Most popular</span>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-brand-300">Forge</h3>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-5xl font-extrabold text-white">$12</span>
+              <span class="text-slate-400">/ mo</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-400">Mid-size packs, active communities.</p>
+            <ul class="mt-6 space-y-2 text-sm text-slate-300 flex-1">
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 8 GB RAM</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Unlimited slots</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 80 GB NVMe</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Hourly backups</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Priority support</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Free subdomain</li>
+            </ul>
+            <a href="https://discord.gg/ARqmzFt3RD" class="mt-6 inline-flex justify-center items-center rounded-md bg-brand-500 hover:bg-brand-400 text-ink-900 font-semibold px-4 py-2.5 text-sm transition">Join Discord for early access</a>
+          </div>
+
+          <!-- Citadel -->
+          <div class="card rounded-xl p-6 flex flex-col">
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-400">Citadel</h3>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-5xl font-extrabold text-white">$24</span>
+              <span class="text-slate-400">/ mo</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-400">Hard packs, large guilds, public servers.</p>
+            <ul class="mt-6 space-y-2 text-sm text-slate-300 flex-1">
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 16 GB RAM</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Unlimited slots</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> 160 GB NVMe</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Hourly backups</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Dedicated IP</li>
+              <li class="flex gap-2"><span class="text-brand-400">✓</span> Priority support</li>
+            </ul>
+            <a href="https://discord.gg/ARqmzFt3RD" class="mt-6 inline-flex justify-center items-center rounded-md border border-white/15 hover:border-white/30 px-4 py-2.5 text-sm font-semibold text-white transition">Join Discord for early access</a>
+          </div>
+        </div>
+        <p class="text-center text-xs text-slate-500 mt-6">Custom RAM up to 64 GB available — ask in Discord.</p>
+      </div>
+    </section>
+
+    <!-- WAITLIST / EMAIL -->
+    <section id="waitlist" class="relative py-24 border-t border-white/5">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-sm font-semibold uppercase tracking-widest text-brand-400">Newsletter</p>
+        <h2 class="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-white">Get notified when we drop new packs.</h2>
+        <p class="mt-4 text-slate-300">One email a month. New modpack releases, performance tips, no spam.</p>
+
+        <form id="waitlist-form" class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" novalidate>
+          <input type="email" required placeholder="you@example.com"
+                 class="flex-1 rounded-md bg-ink-700 border border-white/10 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 px-4 py-3 text-white placeholder:text-slate-500" />
+          <button type="submit"
+                  class="rounded-md bg-brand-500 hover:bg-brand-400 text-ink-900 font-semibold px-6 py-3 transition shadow-glow">
+            Subscribe
+          </button>
+        </form>
+        <p id="waitlist-msg" class="mt-4 text-sm text-slate-400 h-5" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative py-24 border-t border-white/5">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto">
+          <p class="text-sm font-semibold uppercase tracking-widest text-brand-400">FAQ</p>
+          <h2 class="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-white">Things people ask in Discord.</h2>
+        </div>
+        <div class="mt-12 space-y-3">
+          <details class="card rounded-xl p-5 group">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>What modpacks do you support?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">Every public modpack on CurseForge and Modrinth — All The Mods 9, Create: Above &amp; Beyond, Enigmatica, Better MC, RLCraft, you name it. If you can find it, we can host it.</p>
+          </details>
+          <details class="card rounded-xl p-5">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>Can I upload my own modpack?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">Yes. Drop a CurseForge/Modrinth zip in the panel and we'll handle the install. SFTP works too if you prefer the manual route.</p>
+          </details>
+          <details class="card rounded-xl p-5">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>How long does setup take?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">Node allocation is instant. Modpack install depends on size — typical packs are live in 60-120 seconds. Large packs like ATM9 take ~3 minutes to fully download and verify.</p>
+          </details>
+          <details class="card rounded-xl p-5">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>Do you offer refunds?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">7-day money-back guarantee, no questions asked. After that, we prorate cancellations.</p>
+          </details>
+          <details class="card rounded-xl p-5">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>Can I upgrade RAM later?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">One click in the panel. Quick restart, no migration, no IP change, no data loss.</p>
+          </details>
+          <details class="card rounded-xl p-5">
+            <summary class="flex justify-between items-center gap-4 text-white font-semibold">
+              <span>Where are your servers located?</span>
+              <svg class="chev h-5 w-5 text-slate-400 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-400 text-sm">Launching in OVH Vint Hill (US East, Virginia). Hillsboro (US West), Beauharnois (NA East), plus EU and APAC expansion on the roadmap based on demand. Tell us in Discord where you want servers — your votes drive our rollout.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/5 mt-12">
+    <div class="max-w-7xl mx-auto px-6 py-14">
+      <div class="grid gap-10 md:grid-cols-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-brand-500 text-ink-900 font-extrabold">BR</span>
+            <span class="font-extrabold text-white">ByteRaid</span>
+          </div>
+          <p class="mt-3 text-sm text-slate-400 max-w-xs">Dedicated Minecraft modpack hosting, built by people who play modded.</p>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Product</h4>
+          <ul class="mt-3 space-y-2 text-sm text-slate-300">
+            <li><a class="hover:text-white" href="#features">Features</a></li>
+            <li><a class="hover:text-white" href="#pricing">Pricing</a></li>
+            <li><a class="hover:text-white" href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Community</h4>
+          <ul class="mt-3 space-y-2 text-sm text-slate-300">
+            <li><a class="hover:text-white" href="https://discord.gg/ARqmzFt3RD">Discord</a></li>
+            <li><a class="hover:text-white" href="/status">Status</a></li>
+            <li><a class="hover:text-white" href="/changelog">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Legal</h4>
+          <ul class="mt-3 space-y-2 text-sm text-slate-300">
+            <li><a class="hover:text-white" href="/terms">Terms</a></li>
+            <li><a class="hover:text-white" href="/privacy">Privacy</a></li>
+            <li><a class="hover:text-white" href="mailto:hello@byteraid.gg">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4 text-xs text-slate-500">
+        <span>© <span id="year"></span> ByteRaid. Not affiliated with Mojang or Microsoft.</span>
+        <span>Built in Buffalo, NY. Servers in Virginia 🇺🇸</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Newsletter signup → Cloudflare Pages Function at /api/subscribe → Resend Contacts API.
+    // See functions/api/subscribe.js. Submissions are also logged to Pages logs as a fallback.
+    const form = document.getElementById('waitlist-form');
+    const msg = document.getElementById('waitlist-msg');
+    const btn = form.querySelector('button[type=submit]');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emailEl = form.querySelector('input[type=email]');
+      const email = emailEl.value.trim();
+      if (!email || !email.includes('@')) {
+        msg.textContent = 'Please enter a valid email.';
+        msg.className = 'mt-4 text-sm text-rose-400 h-5';
+        return;
+      }
+      const originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Subscribing…';
+      msg.textContent = '';
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          msg.textContent = "You're on the list. We'll be in touch.";
+          msg.className = 'mt-4 text-sm text-emerald-400 h-5';
+          form.reset();
+        } else {
+          msg.textContent = data.error || 'Something went wrong. Try again in a moment.';
+          msg.className = 'mt-4 text-sm text-rose-400 h-5';
+        }
+      } catch {
+        msg.textContent = 'Network error. Check your connection and retry.';
+        msg.className = 'mt-4 text-sm text-rose-400 h-5';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }
+    });
+  </script>
+</body>
+</html>
