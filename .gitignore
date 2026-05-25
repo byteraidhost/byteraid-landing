@@ -3,3 +3,7 @@ node_modules/
 .env
 *.log
 .claude/
+
+# wrangler leftovers — Cloudflare auto-deploys from Git now, no local CLI needed
+package.json
+package-lock.json
